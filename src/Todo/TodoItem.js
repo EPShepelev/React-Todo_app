@@ -8,7 +8,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px 10px',
-    border: '3px solid darkgreen',
+    border: '3px solid black',
     backgroundColor: 'lightgreen',
     borderRadius: '5px',
     marginBottom: '10px'
@@ -18,22 +18,33 @@ const styles = {
   }
 }
 
- function TodoItem ({todo, index}){
+ function TodoItem ({todo, index, onChange}){
+   const classes = []
+   if (todo.completed){
+     classes.push('done')
+   }
   return (
   <li style={styles.li}>
-    <span>
-      <input style={styles.input} type='checkbox'/>
+    <span className={classes.join(' ')}>
+      <input 
+      style={styles.input} 
+      type='checkbox' 
+      checked={todo.completed}
+      onChange={()=> onChange(todo.id)}
+      />
       <strong>{index + 1}</strong>
+      &nbsp;
       {todo.title}
     </span>
-    <button>&times;</button>
+    <button className='rm'>&times;</button>
   </li>
   )
 }
 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
-  index: PropTypes.number
+  index: PropTypes.number,
+  onChange: PropTypes.func.isRequired
 }
 
 export default TodoItem
